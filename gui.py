@@ -1,6 +1,13 @@
 import streamlit as st
 from agent import ask_agent
 
+import re
+
+def clean_markdown(text):
+    # Ensure there's a blank line before any line starting with * or -
+    text = re.sub(r'(?<!\n\n)(\n)([\*\-] )', r'\n\n\2', text)
+    return text
+
 st.set_page_config(page_title="AI Research Agent", page_icon="🔎")
 st.markdown("""
     <style>
@@ -43,3 +50,8 @@ if user_input:
         with st.spinner("Thinking..."):
             answer = ask_agent(user_input, st.session_state.messages)
         st.markdown(answer)
+
+with st.spinner("Thinking..."):
+    answer = ask_agent(user_input, st.session_state.messages)
+answer = clean_markdown(answer)
+st.markdown(answer)

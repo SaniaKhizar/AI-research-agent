@@ -41,7 +41,9 @@ def ask_agent(user_question, messages):
                 "are explicitly present in the search results. Never invent, estimate, or guess specific "
                 "figures (temperatures, statistics, dates, etc.) that aren't directly stated in the results. "
                 "If the search results don't contain enough detail to fully answer the question, say so "
-                "clearly instead of filling in plausible-sounding information."
+                "clearly instead of filling in plausible-sounding information.\n\n"
+                "FORMATTING: When writing lists, use '-' for bullet points, not '*'. Always leave a blank "
+                "line before starting a list and between list items and headings. Keep formatting clean and simple."
             )
         })
 
