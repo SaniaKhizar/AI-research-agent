@@ -1,6 +1,5 @@
 import streamlit as st
 from agent import ask_agent
-
 import re
 
 def clean_markdown(text):
@@ -11,7 +10,6 @@ def clean_markdown(text):
 st.set_page_config(page_title="AI Research Agent", page_icon="🔎")
 st.markdown("""
     <style>
-    /* Target the chat input container */
     [data-testid="stChatInput"] {
         border: 2px solid #2ecc71 !important;
         border-radius: 10px;
@@ -25,36 +23,27 @@ st.markdown("""
 
 st.title("🔎 AI Research Agent")
 st.caption("Ask anything — I'll search the web when I need current information.")
+
 if st.button("🗑️ Clear conversation"):
     st.session_state.messages = []
     st.rerun()
 
-# Initialize conversation history in Streamlit's session state
-# (session_state persists data across reruns, unlike a normal variable)
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Display past messages (skip system messages, users shouldn't see those)
 for msg in st.session_state.messages:
     if msg["role"] in ("user", "assistant"):
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
 
-# Chat input box at the bottom
 user_input = st.chat_input("Ask something...")
 
 if user_input and user_input.strip():
-    # Show the user's message immediately
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    # Get the agent's answer (with a spinner while it thinks/searches)
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             answer = ask_agent(user_input, st.session_state.messages)
+            answer = clean_markdown(answer)
         st.markdown(answer)
-
-with st.spinner("Thinking..."):
-    answer = ask_agent(user_input, st.session_state.messages)
-answer = clean_markdown(answer)
-st.markdown(answer)
