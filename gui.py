@@ -32,7 +32,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 for msg in st.session_state.messages:
-    if msg["role"] in ("user", "assistant"):
+    if isinstance(msg, dict) and msg.get("role") in ("user", "assistant") and msg.get("content"):
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
 
