@@ -52,8 +52,7 @@ def ask_agent(user_question, messages):
                 "'Sources:' section listing the URLs you actually used, each on its own line. Only include "
                 "URLs that were present in the search results you were given — never invent a URL."
                 "And also make the URL clickable so the user can directly fetch it too."
-    )
-            )
+             )
         })
 
     messages.append({"role": "user", "content": user_question})
