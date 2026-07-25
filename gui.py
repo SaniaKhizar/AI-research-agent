@@ -25,6 +25,9 @@ st.markdown("""
 
 st.title("🔎 AI Research Agent")
 st.caption("Ask anything — I'll search the web when I need current information.")
+if st.button("🗑️ Clear conversation"):
+    st.session_state.messages = []
+    st.rerun()
 
 # Initialize conversation history in Streamlit's session state
 # (session_state persists data across reruns, unlike a normal variable)
@@ -40,7 +43,7 @@ for msg in st.session_state.messages:
 # Chat input box at the bottom
 user_input = st.chat_input("Ask something...")
 
-if user_input:
+if user_input and user_input.strip():
     # Show the user's message immediately
     with st.chat_message("user"):
         st.markdown(user_input)
